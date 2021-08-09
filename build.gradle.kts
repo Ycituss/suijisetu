@@ -6,10 +6,15 @@ plugins {
     id("net.mamoe.mirai-console") version "2.7-M2"
 }
 
-group = "org.example"
-version = "1.0.0"
+group = "com.ycitus"
+version = "2.0.0"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
     mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation("com.google.code.gson:gson:2.8.7")
 }

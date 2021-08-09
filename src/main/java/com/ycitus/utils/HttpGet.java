@@ -1,4 +1,4 @@
-package org.example;
+package com.ycitus.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -60,3 +60,4 @@ public class HttpGet {
         return result.toString();
     }
 }
+
