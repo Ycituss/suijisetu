@@ -63,6 +63,7 @@ public class ApplicationConfig_Data {
 	public RandomImages RandomImages = new RandomImages();
 	public class RandomImages {
 		public boolean setu = false;
+		public boolean r18 = false;
 	}
 
 }
