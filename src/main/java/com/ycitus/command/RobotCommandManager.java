@@ -20,7 +20,7 @@ public class RobotCommandManager {
 				"^(?:(?:stg)|(?:STG)|(?:sendtogroup)|(?:SendtoGroup))\\s?([\\s\\S]*)$"));
 		commands.add(new GroupListCommand(
 				"^(?:(?:gl)|(?:GL)|(?:grouplist)|(?:GroupList)|(?:群列表))\\s?([\\s\\S]*)$"));
-		commands.add(new SuperAddCommand("^(?:(?:super)|(?:权限))\\s?([\\s\\S]*)$"));
+		commands.add(new SuperCommand("^(?:(?:super)|(?:权限))\\s?([\\s\\S]*)$"));
 		commands.add(new RandomImagesCommand("^(?:(?:gkd)|(?:来张图))\\s?([\\s\\S]*)$"));
 	}
 

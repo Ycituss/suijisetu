@@ -10,9 +10,9 @@ import net.mamoe.mirai.message.data.MessageChain;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class SuperAddCommand extends RobotCommand {
+public class SuperCommand extends RobotCommand {
 
-    public SuperAddCommand(String rule) {
+    public SuperCommand(String rule) {
         super(rule);
         getRange().add(RobotCommandChatType.FRIEND_CHAT);
         getRange().add(RobotCommandChatType.GROUP_TEMP_CHAT);
