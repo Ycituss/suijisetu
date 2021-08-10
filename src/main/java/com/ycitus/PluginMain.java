@@ -35,8 +35,8 @@ public final class PluginMain extends JavaPlugin {
     }
 
     private PluginMain() {
-        super(new JvmPluginDescriptionBuilder("com.ycitus.Plum", "1.0")
-                .name("Plum")
+        super(new JvmPluginDescriptionBuilder("com.ycitus.setu", "2.0")
+                .name("Setu")
                 .author("ycitus")
                 .build());
     }
@@ -45,7 +45,7 @@ public final class PluginMain extends JavaPlugin {
     public void onEnable() {
 
         pluginLoaded = true;
-        LoggerManager.logDebug("Plum >> Enable.", true);
+        LoggerManager.logDebug("Setu >> Enable.", true);
         LoggerManager.logDebug("Start Init...", true);
 
         // Init CommandSystem.
@@ -193,7 +193,7 @@ public final class PluginMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        super.getLogger().info("Plum >> Disable.");
+        super.getLogger().info("Setu >> Disable.");
     }
 
 }
