@@ -111,7 +111,7 @@ public class SuperCommand extends RobotCommand {
                 + "\"super add\\\\del QQ号码\"\n"
                 + "示例：\n"
                 + "\"super add 2799282971\"\n\n"
-                + "使用\"super open setu开启色图发送\""
+                + "使用\"super open setu开启色图发送\"\n"
                 + "使用\"super close setu开启色图发送\"";
         MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
     }
