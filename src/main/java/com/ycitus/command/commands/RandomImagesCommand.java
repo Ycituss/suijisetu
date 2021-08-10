@@ -110,18 +110,21 @@ public class RandomImagesCommand extends RobotCommand {
                 return;
             }
             if (strings.length == 3){
+                if (strings[2].equals("r18") || strings.equals("R18")){
+                    if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18){
+                        str = httpGet.doGet(loliconUrl + "&size=small" + "&r18=1");
+                        loliconSend(str, fromGroup);
+                    }else {
+                        MessageManager.sendMessageToQQGroup(fromGroup, "当前未开启此权限");
+                    }
+                    return;
+                }
                 switch (strings[2]){
                     case "0": str = httpGet.doGet(loliconUrl + "&size=mini");break;
                     case "1": str = httpGet.doGet(loliconUrl + "&size=thumb");break;
                     case "2": str = httpGet.doGet(loliconUrl + "&size=small");break;
                     case "3": str = httpGet.doGet(loliconUrl + "&size=regular");break;
                     case "4": str = httpGet.doGet(loliconUrl + "&size=original");break;
-                    case "r18":{
-                        if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18)
-                            str = httpGet.doGet(loliconUrl + "&size=small" + "&r18=1");
-                        else str = "当前未开启此权限";
-                        break;
-                    }
                     default: str = "error:无效的参数";
                 }
                 loliconSend(str, fromGroup);
