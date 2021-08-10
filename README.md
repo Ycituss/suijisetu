@@ -11,6 +11,7 @@
 * **插件最新下载地址[github下载地址](https://github.com/Ycituss/suijisetu/releases)     [Gitee下载地址](https://gitee.com/ycycycc123/suijisetu/releases/1.0.0)**
 * **插件所用API[随机色图 (lolicon.app)](https://api.lolicon.app/#/setu) 、[韩小韩API接口站](https://api.vvhan.com/)**
 * **使用时将mirai.jar文件放入plugins文件夹，重启Mirai**
+* **配置文件位于config文件夹下的Setu文件夹中**
 
 ## 指令说明
 
