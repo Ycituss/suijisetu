@@ -40,7 +40,8 @@ public class SendtoOtherGroupCommand extends RobotCommand {
             if (groupindex >= 0 && groupindex < groups.size()){
                 String sendMsg = new String();
                 for (int i = 2; i < strings.length; i++){
-                    sendMsg = sendMsg + strings[i] + " ";
+                    sendMsg = sendMsg + strings[i];
+                    if (i != strings.length-1) sendMsg = sendMsg + " ";
                 }
                 for (Group group : groups){
                     if (groupindex-- == 0){
