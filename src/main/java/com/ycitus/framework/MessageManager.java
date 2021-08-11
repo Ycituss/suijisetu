@@ -26,8 +26,10 @@ public class MessageManager {
 
 		LoggerManager.logDebug("SendSystem",
 				"checkSendMsgLength() -> length = " + sendMsg.length());
-
-		if (sendMsg.length() >= FileManager.applicationConfig_File.getSpecificDataInstance().Systems.SendSystem.sendMsgMaxLength) {
+		
+		int msgMaxLength = FileManager.applicationConfig_File.getSpecificDataInstance().Systems.SendSystem.sendMsgMaxLength;
+		
+		if (sendMsg.length() >= msgMaxLength && msgMaxLength != 0) {
 			return defaultMsg;
 		} else {
 			return sendMsg;
