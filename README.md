@@ -12,6 +12,7 @@
 * **插件所用API[随机色图 (lolicon.app)](https://api.lolicon.app/#/setu) 、[韩小韩API接口站](https://api.vvhan.com/)**
 * **使用时将mirai.jar文件放入plugins文件夹，重启Mirai**
 * **配置文件位于config文件夹下的Setu文件夹中**
+* **第一次用在配置文件里手动更改botAdministrators项，改为自己的QQ号**
 
 ## 指令说明
 
