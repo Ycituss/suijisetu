@@ -250,7 +250,8 @@ public class SuperCommand extends RobotCommand {
                 + "使用以下格式添加或删除成员权限：\n"
                 + "\"super add\\\\del QQ号码\"\n"
                 + "示例：\n"
-                + "\"super add 2799282971\"\n";
+                + "\"super add 2799282971\"\n\n"
+                + "更多帮助请查看http://www.ycitus.cn/other/index.html";
         MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
     }
 

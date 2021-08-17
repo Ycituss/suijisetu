@@ -62,7 +62,8 @@ public class SendtoOtherGroupCommand extends RobotCommand {
                 + "(群编号请输入\"群编号\"或\"grouplist\"或\"gl\"查看)\n"
                 + "用法示例：\n"
                 + "\"stg 1 测试消息\"" + "\n"
-                + "\"stg 2 test message\"";
+                + "\"stg 2 test message\"\n\n"
+                + "更多帮助请查看http://www.ycitus.cn/other/index.html";
 
         MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
     }
