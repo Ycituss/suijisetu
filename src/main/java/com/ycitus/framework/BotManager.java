@@ -1,10 +1,7 @@
 package com.ycitus.framework;
 
 import com.ycitus.PluginMain;
-import com.ycitus.files.ConfigFile;
 import net.mamoe.mirai.contact.*;
-
-import java.io.File;
 
 public class BotManager {
 
@@ -36,9 +33,5 @@ public class BotManager {
 		return ret;
 	}
 
-	public static String getVoicesPath() {
-		return ConfigFile.getApplicationConfigPath() + "voice-files" + File.separator;
-
-	}
 
 }

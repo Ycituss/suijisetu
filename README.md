@@ -13,23 +13,32 @@
 * **使用时将mirai.jar文件放入plugins文件夹，重启Mirai**
 * **配置文件位于config文件夹下的Setu文件夹中**
 * **第一次用在配置文件里手动更改botAdministrators项，改为自己的QQ号**
+* <font color=red>**3.0.0版本对配置文件进行结构调整,低版本升级请删除原来的配置文件**</font>
 
 ## 指令说明
 
 - ### **权限管理**
->说明|指令|示例
+>说明|指令|备注
 >---|---|---
 > 查看当前拥有权限的成员|super list|
-> 给成员添加权限|super add QQ号|super add 2799282971
-> 删除成员权限|super del QQ号|super del 2799282971
-> 打开随机色图|super open setu
-> 关闭随机色图|super close setu
-> 打开随机色图r18功能|super open r18|
-> 关闭随机色图r18功能|super close r18
+> 给成员添加权限|super add QQ号|
+> 删除成员权限|super del QQ号|
+> 打开本群随机色图|super open setu (all)|(all)为可选参数，表示全局开启或关闭
+> 关闭本群随机色图|super close setu (all)
+> 打开本群随机色图r18功能|super open r18 (all)|
+> 关闭本群随机色图r18功能|super close r18 (all)
 
 - ### **随机图片指令**
 ><font color=Darkorange>*指令头*</font>|<font color=Darkorange>*gkd/来张图*</font>
 > ---|---
+> 
+> 新增指令头自定义,可通过
+> <font color=Darkblu>super  command  add/del  [自定义指令头]</font>
+> 更改指令头
+> 
+> 使用
+> <font color=Darkblu>super  command  list</font>
+> 查看当前指令头
 > 
 >说明|指令|示例
 > ---|---|---
@@ -38,7 +47,7 @@
 > 发送随机手机分辨率美图|真人/三次元|来张图 三次元
 > 发送随机电脑分辨率美图|无|gkd
 > 
-> <font color=DarkSalmon>*随机发送二次元色图指令*</font>|<font color=DarkSalmon>*gkd/来张图 setu/色图 (图片规格) (内容偏好)*</font>
+> <font color=DarkSalmon>*随机发送二次元色图指令*</font>|<font color=DarkSalmon>*[指令头] setu/色图 (图片规格) (内容偏好)*</font>
 > ---|---
 > 
 > ()内为可选参数

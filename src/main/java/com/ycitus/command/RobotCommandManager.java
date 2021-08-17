@@ -16,12 +16,14 @@ public class RobotCommandManager {
 	public RobotCommandManager() {
 		// Add Commands.
 		commands.add(new ReloadCommand("#重载配置.*"));
+		commands.add(new RebotCommand("seturebot"));
 		commands.add(new SendtoOtherGroupCommand(
 				"^(?:(?:stg)|(?:STG)|(?:sendtogroup)|(?:SendtoGroup))\\s?([\\s\\S]*)$"));
 		commands.add(new GroupListCommand(
 				"^(?:(?:gl)|(?:GL)|(?:grouplist)|(?:GroupList)|(?:群列表))\\s?([\\s\\S]*)$"));
 		commands.add(new SuperCommand("^(?:(?:super)|(?:权限))\\s?([\\s\\S]*)$"));
-		commands.add(new RandomImagesCommand("^(?:(?:gkd)|(?:来张图))\\s?([\\s\\S]*)$"));
+		commands.add(new RandomImagesCommand(setCommand(FileManager.applicationConfig_File
+				.getSpecificDataInstance().RandomImages.setuCommands)));
 	}
 
 	// 判断某条信息是否为指令，快速判断，防止网络攻击，优化性能
@@ -69,6 +71,17 @@ public class RobotCommandManager {
 			return;
 		}
 
+	}
+
+	public String setCommand(ArrayList<String> setuCommands){
+		String command = "^(?:";
+		if (setuCommands.isEmpty()) return "来张图";
+		for (String setuCommand : setuCommands){
+			command = command + "(?:" + setuCommand + ")|";
+		}
+		command = command.substring(0, command.length() - 1);
+		command = command + ")\\s?([\\s\\S]*)$";
+		return command;
 	}
 
 }

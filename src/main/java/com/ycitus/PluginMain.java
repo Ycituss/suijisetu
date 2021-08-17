@@ -15,12 +15,13 @@ public final class PluginMain extends JavaPlugin {
     // WARNING: INSTANCE字段必须设置为public, 否则mirai-console在反射时会失败.
     public static final PluginMain INSTANCE = new PluginMain();
     private static boolean pluginLoaded = false;
-    private static RobotCommandManager commandManager = null;
+    public static RobotCommandManager commandManager = null;
     private static Bot CURRENT_BOT = null;
+    private static String version = "3.0.0";
 
-    public static PluginMain getInstance() {
-        return INSTANCE;
-    }
+    public static String getVersion() { return version; }
+
+    public static PluginMain getInstance() { return INSTANCE;  }
 
     public static Bot getCurrentBot() {
         return CURRENT_BOT;
@@ -35,7 +36,7 @@ public final class PluginMain extends JavaPlugin {
     }
 
     private PluginMain() {
-        super(new JvmPluginDescriptionBuilder("com.ycitus.setu", "2.0")
+        super(new JvmPluginDescriptionBuilder("com.ycitus.setu", "3.0.0")
                 .name("Setu")
                 .author("ycitus")
                 .build());
@@ -48,10 +49,6 @@ public final class PluginMain extends JavaPlugin {
         LoggerManager.logDebug("Setu >> Enable.", true);
         LoggerManager.logDebug("Start Init...", true);
 
-        // Init CommandSystem.
-        LoggerManager.logDebug("CommandSystem", "Init CommandSystem.", true);
-        commandManager = new RobotCommandManager();
-
         // Init FileSystem.
         try {
             LoggerManager.logDebug("FileSystem", "Init FileSystem.", true);
@@ -60,15 +57,9 @@ public final class PluginMain extends JavaPlugin {
             LoggerManager.reportException(e);
         }
 
-//        // Init AudioUtils.
-//        LoggerManager.logDebug("Init AudioUtils.", true);
-//        try {
-//            File cacheFile = new File(MusicPlatAPI.getVoicesPath());
-//            cacheFile.mkdirs();
-//            AudioUtils.init(cacheFile);
-//        } catch (IOException e) {
-//            LoggerManager.reportException(e);
-//        }
+        // Init CommandSystem.
+        LoggerManager.logDebug("CommandSystem", "Init CommandSystem.", true);
+        commandManager = new RobotCommandManager();
 
         /** 接收群消息事件 **/
         LoggerManager.logDebug("EventSystem", "Start to subscribe events.");

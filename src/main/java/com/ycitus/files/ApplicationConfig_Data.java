@@ -1,8 +1,12 @@
 package com.ycitus.files;
 
+import com.ycitus.PluginMain;
+
 import java.util.ArrayList;
 
 public class ApplicationConfig_Data {
+
+	public String version = PluginMain.getVersion();
 
 	public Debug Debug = new Debug();
 	public class Debug {
@@ -31,7 +35,6 @@ public class ApplicationConfig_Data {
 			}
 		};
 	}
-
 	public Systems Systems = new Systems();
 	public class Systems {
 
@@ -62,8 +65,20 @@ public class ApplicationConfig_Data {
 
 	public RandomImages RandomImages = new RandomImages();
 	public class RandomImages {
-		public boolean setu = false;
-		public boolean r18 = false;
+		public boolean setuAll = false;
+		public boolean r18All = false;
+		public ArrayList<String> setuCommands = new ArrayList<String>(){
+			{
+				this.add("gkd");
+				this.add("来张图");
+			}
+		};
+		public ArrayList<Long> groupSetu = new ArrayList<Long>(){
+
+		};
+		public ArrayList<Long> groupR18 = new ArrayList<Long>(){
+
+		};
 	}
 
 }

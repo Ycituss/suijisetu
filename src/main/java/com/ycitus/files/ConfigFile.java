@@ -2,10 +2,12 @@ package com.ycitus.files;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ycitus.PluginMain;
 import com.ycitus.debug.LoggerManager;
 import com.ycitus.utils.FileUtil;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class ConfigFile {
 
@@ -88,6 +90,11 @@ public class ConfigFile {
         }
     }
 
+    public Boolean deleteFile(){
+        File file = new File(filePath + fileName);
+        return file.delete();
+    }
+
     public Class<?> getConfigDataClass() {
         return configDataClass;
     }
@@ -142,6 +149,17 @@ public class ConfigFile {
 
         // 从本地存储加载相应的配置文件
         loadFile();
+
+        //版本更新
+        String version = PluginMain.getVersion();
+        if (!FileManager.applicationConfig_File.getSpecificDataInstance().version.equals(version)){
+            updateConfig();
+            FileManager.applicationConfig_File.getSpecificDataInstance().version = version;
+            saveFile();
+            reloadFile();
+            LoggerManager.logDebug("FileSystem", "Setu版本更新成功!");
+        }
+
 
         // Set Flag.
         this.hasInit = true;
@@ -240,4 +258,69 @@ public class ConfigFile {
 
     }
 
+    /**
+     * 更新配置文件并保留配置
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     * @throws IOException
+     */
+    public void updateConfig() throws IllegalArgumentException, IllegalAccessException,
+            IOException{
+        Boolean DebugEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Debug.enable;
+        Boolean autoAcceptAddQQFriend = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Admin.InvitationManager.QQFriendInvitation.autoAcceptAddQQFriend;
+        Boolean autoAcceptAddQQGroup = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Admin.InvitationManager.QQGroupInvitation.autoAcceptAddQQGroup;
+        ArrayList<Long> botAdministrators = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Admin.botAdministrators;
+        Boolean SendToFriendsEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.SendDelay.SendToFriends.enable;
+        long SendToFriendsDelay = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.SendDelay.SendToFriends.delayTimeMS;
+        Boolean SendToGroupsEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.SendDelay.SendToGroups.enable;
+        long SendToGroupsDelay = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.SendDelay.SendToGroups.delayTimeMS;
+        int sendMsgMaxLength = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.sendMsgMaxLength;
+        Boolean setu = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll;
+        Boolean r18 = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All;
+
+        this.deleteFile();
+        ApplicationConfig_File tempFile = new ApplicationConfig_File(ConfigFile.getApplicationConfigPath(),
+                "temp.json", ApplicationConfig_Data.class);
+        if (tempFile.isExist()) tempFile.deleteFile();
+        tempFile.createFile();
+        tempFile.writeNormalFile();
+        File file = new File(tempFile.getFilePath() + tempFile.getFileName());
+//        Files.copy(file.toPath(), new File(tempFile.getFilePath() + "t.json").toPath());
+        if (new File(filePath + fileName).exists()){
+            LoggerManager.logDebug("FileSystem", "config删除失败");
+        }
+        file.renameTo(new File(getFilePath() + getFileName()));
+        this.reloadFile();
+
+        FileManager.applicationConfig_File.getSpecificDataInstance().Debug.enable = DebugEnable;
+        FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Admin.InvitationManager.QQFriendInvitation.autoAcceptAddQQFriend = autoAcceptAddQQFriend;
+        FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Admin.InvitationManager.QQGroupInvitation.autoAcceptAddQQGroup = autoAcceptAddQQGroup;
+        FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Admin.botAdministrators = botAdministrators;
+        FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.SendDelay.SendToFriends.enable = SendToFriendsEnable;
+        FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.SendDelay.SendToFriends.delayTimeMS = SendToFriendsDelay;
+        FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.SendDelay.SendToGroups.enable = SendToGroupsEnable;
+        FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.SendDelay.SendToGroups.delayTimeMS = SendToGroupsDelay;
+        FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .SendSystem.sendMsgMaxLength = sendMsgMaxLength;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll = setu;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All = r18;
+
+        saveFile();
+        reloadFile();
+    }
 }

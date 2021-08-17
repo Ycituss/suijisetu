@@ -76,11 +76,15 @@ public class RandomImagesCommand extends RobotCommand {
     private static void lolicon(long fromGroup, long fromQQ, String[] strings){
         HttpGet httpGet = new HttpGet();
         String loliconUrl = "https://api.lolicon.app/setu/v2?";
-        if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setu){
+        if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll
+                || FileManager.applicationConfig_File.getSpecificDataInstance()
+                    .RandomImages.groupSetu.contains(fromGroup)){
             String str = new String();
             if (strings.length == 4){
                 if (strings[2].equals("r18") || strings[2].equals("R18")){
-                    if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18){
+                    if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All
+                            || FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupR18.contains(fromGroup)){
                         switch (strings[3]){
                             case "0": str = httpGet.doGet(loliconUrl + "&size=mini" + "&r18=1");break;
                             case "1": str = httpGet.doGet(loliconUrl + "&size=thumb" + "&r18=1");break;
@@ -93,7 +97,9 @@ public class RandomImagesCommand extends RobotCommand {
                         MessageManager.sendMessageToQQGroup(fromGroup, "当前未开启此权限");
                     }
                 }else if (strings[3].equals("r18") || strings[3].equals("R18")){
-                    if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18){
+                    if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All
+                            || FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupR18.contains(fromGroup)){
                         switch (strings[2]){
                             case "0": str = httpGet.doGet(loliconUrl + "&size=mini" + "&r18=1");break;
                             case "1": str = httpGet.doGet(loliconUrl + "&size=thumb" + "&r18=1");break;
@@ -111,7 +117,9 @@ public class RandomImagesCommand extends RobotCommand {
             }
             if (strings.length == 3){
                 if (strings[2].equals("r18") || strings.equals("R18")){
-                    if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18){
+                    if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All
+                            || FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupR18.contains(fromGroup)){
                         str = httpGet.doGet(loliconUrl + "&size=small" + "&r18=1");
                         loliconSend(str, fromGroup);
                     }else {

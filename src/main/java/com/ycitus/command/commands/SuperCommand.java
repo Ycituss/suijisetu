@@ -1,7 +1,9 @@
 package com.ycitus.command.commands;
 
+import com.ycitus.PluginMain;
 import com.ycitus.command.RobotCommand;
 import com.ycitus.command.RobotCommandChatType;
+import com.ycitus.command.RobotCommandManager;
 import com.ycitus.command.RobotCommandUser;
 import com.ycitus.files.FileManager;
 import com.ycitus.framework.MessageManager;
@@ -27,6 +29,23 @@ public class SuperCommand extends RobotCommand {
 
         String msg = messageChain.contentToString();
         String[] strings = msg.split(" ");
+        ArrayList<String> BasicCommands = new ArrayList<String>(){
+            {
+                this.add("#重载配置");
+                this.add("seturebot");
+                this.add("sendtogroup");
+                this.add("SendtoGroup");
+                this.add("stg");
+                this.add("STG");
+                this.add("gl");
+                this.add("GL");
+                this.add("grouplist");
+                this.add("GroupList");
+                this.add("群列表");
+                this.add("super");
+                this.add("权限");
+            }
+        };
 
         if (strings.length >= 2 && strings[1].equals("list")){
             ArrayList<Long> qqs = FileManager.applicationConfig_File
@@ -80,13 +99,47 @@ public class SuperCommand extends RobotCommand {
 
         if (strings.length >= 3 && strings[1].equals("open")){
             if (strings[2].equals("setu")){
-                if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setu){
-                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "色图发送已打开，请勿重复操作");
-                }else {
-                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setu = true;
+                if (strings.length >= 4 && strings[3].equals("all")){
+                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll = true;
                     FileManager.applicationConfig_File.saveFile();
                     FileManager.applicationConfig_File.reloadFile();
-                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "随机色图开启成功");
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "全局随机色图打开成功!");
+                }else {
+                    if (FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.groupSetu.contains(fromGroup)){
+                        MessageManager.sendMessageBySituation(fromGroup
+                                , fromQQ, "本群色图发送已打开，请勿重复操作!");
+                    }else {
+                        FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupSetu.add(fromGroup);
+                        FileManager.applicationConfig_File.saveFile();
+                        FileManager.applicationConfig_File.reloadFile();
+                        MessageManager.sendMessageBySituation(fromGroup, fromQQ, "随机色图开启成功!");
+                    }
+                }
+            }else if (strings[2].equals("r18") || strings[2].equals("R18")){
+                if (strings.length >= 4 && strings[3].equals("all")){
+                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All = true;
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "全局r18色图打开成功!");
+                }else {
+                    if (FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.groupSetu.contains(fromGroup)){
+                        if (FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupR18.contains(fromGroup)){
+                            MessageManager.sendMessageBySituation(fromGroup
+                                    , fromQQ, "本群r18色图发送已打开，请勿重复操作!");
+                        }else {
+                            FileManager.applicationConfig_File.getSpecificDataInstance()
+                                    .RandomImages.groupR18.add(fromGroup);
+                            FileManager.applicationConfig_File.saveFile();
+                            FileManager.applicationConfig_File.reloadFile();
+                            MessageManager.sendMessageBySituation(fromGroup, fromQQ, "r18色图开启成功!");
+                        }
+                    }else {
+                        MessageManager.sendMessageBySituation(fromGroup, fromQQ, "请先开启本群随机色图!");
+                    }
                 }
             }
             return;
@@ -94,13 +147,100 @@ public class SuperCommand extends RobotCommand {
 
         if (strings.length >= 3 && strings[1].equals("close")){
             if (strings[2].equals("setu")){
-                if (!FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setu){
-                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "色图发送已关闭，请勿重复操作");
-                }else {
-                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setu = false;
+                FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll = false;
+                FileManager.applicationConfig_File.saveFile();
+                FileManager.applicationConfig_File.reloadFile();
+                if (strings.length >= 4 && strings[3].equals("all")){
+                    FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.groupSetu = new ArrayList<>();
                     FileManager.applicationConfig_File.saveFile();
                     FileManager.applicationConfig_File.reloadFile();
-                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "随机色图关闭成功");
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "随机色图已全局关闭!");
+                }else {
+                    if (!FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.groupSetu.contains(fromGroup)){
+                        MessageManager.sendMessageBySituation(fromGroup
+                                , fromQQ, "本群色图发送已关闭，请勿重复操作!");
+                    }else {
+                        FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupSetu.remove(fromGroup);
+                        if (FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupR18.contains(fromGroup)){
+                            FileManager.applicationConfig_File.getSpecificDataInstance()
+                                    .RandomImages.groupR18.remove(fromGroup);
+                        }
+                        FileManager.applicationConfig_File.saveFile();
+                        FileManager.applicationConfig_File.reloadFile();
+                        MessageManager.sendMessageBySituation(fromGroup, fromQQ, "随机色图关闭成功!");
+                    }
+                }
+            }else if (strings[2].equals("r18") || strings[2].equals("R18")){
+                FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All = false;
+                FileManager.applicationConfig_File.saveFile();
+                FileManager.applicationConfig_File.reloadFile();
+                if (strings.length >= 4 && strings[3].equals("all")){
+                    FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.groupR18 = new ArrayList<>();
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "r18色图已全局关闭!");
+                }else {
+                    if (FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.groupR18.contains(fromGroup)){
+                        MessageManager.sendMessageBySituation(fromGroup
+                                , fromQQ, "本群r18色图发送已关闭，请勿重复操作");
+                    }else {
+                        FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupR18.add(fromGroup);
+                        FileManager.applicationConfig_File.saveFile();
+                        FileManager.applicationConfig_File.reloadFile();
+                        MessageManager.sendMessageBySituation(fromGroup, fromQQ, "r18色图关闭成功!");
+                    }
+                }
+            }
+            return;
+        }
+
+        if (strings.length >= 3 && strings[1].equals("command")){
+            ArrayList<String> setuCommands = FileManager.applicationConfig_File
+                    .getSpecificDataInstance().RandomImages.setuCommands;
+            if (strings[2].equals("list")){
+                StringBuffer stringBuffer = new StringBuffer();
+                stringBuffer.append("当前召唤图片可用指令头:\n");
+                for (String setuCommand : setuCommands){
+                    stringBuffer.append(setuCommand).append("\n");
+                }
+                String list = stringBuffer.toString();
+                list = list.substring(0, list.length() - 1);
+                MessageManager.sendMessageBySituation(fromGroup, fromQQ, list);
+            }else if (strings[2].equals("add")){
+                if (BasicCommands.contains(strings[3])){
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "插件保留指令头，不可用!");
+                }else {
+                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages
+                            .setuCommands.add(strings[3]);
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    PluginMain.commandManager = new RobotCommandManager();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "添加成功!");
+                }
+            }else if (strings[2].equals("del")){
+                if (setuCommands.contains(strings[3])){
+                    if (setuCommands.size() == 1){
+                        MessageManager.sendMessageBySituation(fromGroup, fromQQ, "需至少保留一个可用的指令头");
+                    }else {
+                        FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.setuCommands.remove(strings[3]);
+                        FileManager.applicationConfig_File.saveFile();
+                        FileManager.applicationConfig_File.reloadFile();
+                        PluginMain.commandManager = new RobotCommandManager();
+                        FileManager.applicationConfig_File.reloadFile();
+                        MessageManager.sendMessageBySituation(fromGroup, fromQQ, "删除成功!");
+
+                    }
+                }else {
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "要删除的指令头不存在!");
                 }
             }
             return;
@@ -110,9 +250,7 @@ public class SuperCommand extends RobotCommand {
                 + "使用以下格式添加或删除成员权限：\n"
                 + "\"super add\\\\del QQ号码\"\n"
                 + "示例：\n"
-                + "\"super add 2799282971\"\n\n"
-                + "使用\"super open setu开启色图发送\"\n"
-                + "使用\"super close setu开启色图发送\"";
+                + "\"super add 2799282971\"\n";
         MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
     }
 
