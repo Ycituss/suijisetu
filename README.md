@@ -13,7 +13,7 @@
 * **使用时将mirai.jar文件放入plugins文件夹，重启Mirai**
 * **配置文件位于config文件夹下的Setu文件夹中**
 * **第一次用在配置文件里手动更改botAdministrators项，改为自己的QQ号**
-* <font color=red>**3.0.0版本对配置文件进行结构调整,低版本升级请删除原来的配置文件**</font>
+* **<font color=red>3.0.0版本对配置文件进行结构调整,低版本升级请删除原来的配置文件;</font>3.0.0之后的版本即可在版本更新时自动更新配置文件.**
 
 ## 指令说明
 
@@ -23,7 +23,10 @@
 > 查看当前拥有权限的成员|super list|
 > 给成员添加权限|super add QQ号|
 > 删除成员权限|super del QQ号|
-> 打开本群随机色图|super open setu (all)|(all)为可选参数，表示全局开启或关闭
+> 设置默认色图画质|super set imageQuality 2|可选参数有0,1,2,3,4;初始设置为2
+> 打开本群随机图片发送|super open (all)|(all)为可选参数，表示全局开启或关闭
+> 关闭本群随机图片发送|super close (all)
+> 打开本群随机色图|super open setu (all)
 > 关闭本群随机色图|super close setu (all)
 > 打开本群随机色图r18功能|super open r18 (all)|
 > 关闭本群随机色图r18功能|super close r18 (all)

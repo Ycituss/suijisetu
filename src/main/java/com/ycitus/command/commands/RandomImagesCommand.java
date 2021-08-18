@@ -38,8 +38,15 @@ public class RandomImagesCommand extends RobotCommand {
     @Override
     public void runCommand(int msgType, int time, long fromGroup, long fromQQ, MessageChain messageChain) {
 
+        if (!FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableAll
+                && !FileManager.applicationConfig_File.getSpecificDataInstance()
+                    .RandomImages.enableGroup.contains(fromGroup)){
+            MessageManager.sendMessageToQQGroup(fromGroup, "本群未开启随机图片发送");
+            return;
+        }
+
         String msg = messageChain.contentToString();
-        String[] strings = msg.split(" ");
+        String[] strings = cutMsg(msg).split(" ");
 
         if (strings.length >= 2 && (strings[1].equals("setu") || strings[1].equals("色图"))){
             lolicon(fromGroup, fromQQ, strings);
@@ -49,9 +56,33 @@ public class RandomImagesCommand extends RobotCommand {
             sendImage(fromGroup, "png", "三次元", "https://api.vvhan.com/api/mobil.girl");
         }else if (strings.length >= 2 && (strings[1].equals("lol") || strings[1].equals("英雄联盟"))){
             sendImage(fromGroup, "png", "lol", "https://api.vvhan.com/api/lolskin");
-        }else {
+        }else if (strings.length == 1){
             sendImage(fromGroup, "png", "三次元", "https://api.vvhan.com/api/girl");
+        }else {
+            MessageManager.sendMessageBySituation(fromGroup, fromQQ, "输入的指令有误!");
         }
+    }
+
+    private String cutMsg(String msg){
+        String command = "^(\\bgkd)|(\\btest)";
+        String target = "^(\\bsetu)|(\\b色图)|(\\b风景)|(\\b风景图)|(\\b真人)|(\\b三次元)|(\\blol)|(\\b英雄联盟)" +
+                "|(\\br18)|(\\bR18)|(\\b0)|(\\b1)|(\\b2)|(\\b3)|(\\b4)";
+
+        msg = msg.replace(" ", "");
+        msg = msg.replaceFirst(command, "");
+        String result = "gkd ";
+
+        while (msg.length() > 0){
+            String msgCopy = msg;
+            msg = msg.replaceFirst(target, "");
+            if (msg.length() == msgCopy.length() && !msg.isEmpty()){
+                result = result + msg;
+                msg = "";
+            }else {
+                result = result + msgCopy.substring(0, msgCopy.length() - msg.length()) + " ";
+            }
+        }
+        return result;
     }
 
     /*
@@ -92,9 +123,10 @@ public class RandomImagesCommand extends RobotCommand {
                             case "3": str = httpGet.doGet(loliconUrl + "&size=regular" + "&r18=1");break;
                             case "4": str = httpGet.doGet(loliconUrl + "&size=original" + "&r18=1");break;
                             default: str = "error:无效的参数";
+                            loliconSend(str, fromGroup);
                         }
                     }else {
-                        MessageManager.sendMessageToQQGroup(fromGroup, "当前未开启此权限");
+                        MessageManager.sendMessageToQQGroup(fromGroup, "本群未开启r18");
                     }
                 }else if (strings[3].equals("r18") || strings[3].equals("R18")){
                     if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All
@@ -107,12 +139,12 @@ public class RandomImagesCommand extends RobotCommand {
                             case "3": str = httpGet.doGet(loliconUrl + "&size=regular" + "&r18=1");break;
                             case "4": str = httpGet.doGet(loliconUrl + "&size=original" + "&r18=1");break;
                             default: str = "error:无效的参数";
+                            loliconSend(str, fromGroup);
                         }
                     }else {
-                        MessageManager.sendMessageToQQGroup(fromGroup, "当前未开启此权限");
+                        MessageManager.sendMessageToQQGroup(fromGroup, "本群未开启r18");
                     }
                 }
-                loliconSend(str, fromGroup);
                 return;
             }
             if (strings.length == 3){
@@ -120,10 +152,10 @@ public class RandomImagesCommand extends RobotCommand {
                     if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All
                             || FileManager.applicationConfig_File.getSpecificDataInstance()
                                 .RandomImages.groupR18.contains(fromGroup)){
-                        str = httpGet.doGet(loliconUrl + "&size=small" + "&r18=1");
+                        str = httpGet.doGet(loliconUrl + imageQuality() + "&r18=1");
                         loliconSend(str, fromGroup);
                     }else {
-                        MessageManager.sendMessageToQQGroup(fromGroup, "当前未开启此权限");
+                        MessageManager.sendMessageToQQGroup(fromGroup, "本群未开启r18");
                     }
                     return;
                 }
@@ -138,12 +170,28 @@ public class RandomImagesCommand extends RobotCommand {
                 loliconSend(str, fromGroup);
                 return;
             }
-            if (strings.length > 4) MessageManager.sendMessageBySituation(fromGroup, fromQQ, "无效的参数");
-            str = httpGet.doGet(loliconUrl + "&size=small");
+            if (strings.length > 4) {
+                MessageManager.sendMessageBySituation(fromGroup, fromQQ, "无效的参数");
+                return;
+            }
+            str = httpGet.doGet(loliconUrl + imageQuality());
             loliconSend(str, fromGroup);
         }else {
-            MessageManager.sendMessageToQQGroup(fromGroup, "随机色图未开启，请联系管理员");
+            MessageManager.sendMessageToQQGroup(fromGroup, "本群未开启色图");
         }
+    }
+
+    private static String imageQuality(){
+        String result = new String();
+        switch (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.defaultSetuQuality){
+            case 0: result = "&size=mini";break;
+            case 1: result = "&size=thumb";break;
+            case 3: result = "&size=regular";break;
+            case 4: result = "&size=original";break;
+            case 2:
+            default: result = "&size=small";
+        }
+        return result;
     }
 
     /*

@@ -65,13 +65,18 @@ public class ApplicationConfig_Data {
 
 	public RandomImages RandomImages = new RandomImages();
 	public class RandomImages {
+		public boolean enableAll = true;
 		public boolean setuAll = false;
 		public boolean r18All = false;
+		public int defaultSetuQuality = 2;
 		public ArrayList<String> setuCommands = new ArrayList<String>(){
 			{
 				this.add("gkd");
 				this.add("来张图");
 			}
+		};
+		public ArrayList<Long> enableGroup = new ArrayList<Long>(){
+
 		};
 		public ArrayList<Long> groupSetu = new ArrayList<Long>(){
 

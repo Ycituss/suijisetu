@@ -285,6 +285,12 @@ public class ConfigFile {
                 .SendSystem.sendMsgMaxLength;
         Boolean setu = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll;
         Boolean r18 = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All;
+        ArrayList<String> setuCommands = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.setuCommands;
+        ArrayList<Long> groupSetu = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.groupSetu;
+        ArrayList<Long> groupR18 = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.groupR18;
 
         this.deleteFile();
         ApplicationConfig_File tempFile = new ApplicationConfig_File(ConfigFile.getApplicationConfigPath(),
@@ -319,6 +325,9 @@ public class ConfigFile {
                 .SendSystem.sendMsgMaxLength = sendMsgMaxLength;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll = setu;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All = r18;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuCommands = setuCommands;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.groupSetu = groupSetu;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.groupR18 = groupR18;
 
         saveFile();
         reloadFile();
