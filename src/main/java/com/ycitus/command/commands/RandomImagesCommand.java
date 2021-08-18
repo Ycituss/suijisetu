@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +65,13 @@ public class RandomImagesCommand extends RobotCommand {
     }
 
     private String cutMsg(String msg){
-        String command = "^(\\bgkd)|(\\btest)";
+        ArrayList<String> commands = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.setuCommands;
+        String command = "^";
+        for (String str : commands){
+            command = command + "(\\b" + str + ")|";
+        }
+        command = command.substring(0, command.length() - 1);
         String target = "^(\\bsetu)|(\\b色图)|(\\b风景)|(\\b风景图)|(\\b真人)|(\\b三次元)|(\\blol)|(\\b英雄联盟)" +
                 "|(\\br18)|(\\bR18)|(\\b0)|(\\b1)|(\\b2)|(\\b3)|(\\b4)";
 
