@@ -18,7 +18,7 @@ public class RobotCommandManager {
 		commands.add(new ReloadCommand("#重载配置.*"));
 		commands.add(new RebotCommand("seturebot"));
 		commands.add(new SendtoOtherGroupCommand(setCommand(FileManager.applicationConfig_File
-				.getSpecificDataInstance().Systems.Commands.groupListCommands)));
+				.getSpecificDataInstance().Systems.Commands.sendtoOtherGroupCommands)));
 		commands.add(new GroupListCommand(setCommand(FileManager.applicationConfig_File
 				.getSpecificDataInstance().Systems.Commands.groupListCommands)));
 		commands.add(new SuperCommand(setCommand(FileManager.applicationConfig_File
