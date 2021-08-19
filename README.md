@@ -24,7 +24,7 @@
 > 给成员添加权限|super add QQ号|
 > 删除成员权限|super del QQ号|
 > 设置默认色图画质|super set imageQuality 2|可选参数有0,1,2,3,4;初始设置为2
-> 打开本群随机图片发送|super open (all)|(all)为可选参数，表示全局开启或关闭
+> 打开本群随机图片发送|super open (all)|(all)为可选参数，表示全局开启或关闭，使用时请不要带括号
 > 关闭本群随机图片发送|super close (all)
 > 打开本群随机色图|super open setu (all)
 > 关闭本群随机色图|super close setu (all)
