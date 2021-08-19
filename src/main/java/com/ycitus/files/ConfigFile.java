@@ -291,6 +291,12 @@ public class ConfigFile {
                 .RandomImages.groupSetu;
         ArrayList<Long> groupR18 = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.groupR18;
+        Boolean enableAll = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.enableAll;
+        int defaultSetuQuality = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.defaultSetuQuality;
+        ArrayList<Long> enableGroup = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.enableGroup;
 
         this.deleteFile();
         ApplicationConfig_File tempFile = new ApplicationConfig_File(ConfigFile.getApplicationConfigPath(),
@@ -328,6 +334,9 @@ public class ConfigFile {
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuCommands = setuCommands;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.groupSetu = groupSetu;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.groupR18 = groupR18;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableAll = enableAll;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.defaultSetuQuality = defaultSetuQuality;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableGroup = enableGroup;
 
         saveFile();
         reloadFile();

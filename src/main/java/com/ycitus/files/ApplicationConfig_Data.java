@@ -61,6 +61,32 @@ public class ApplicationConfig_Data {
 			public int sendMsgMaxLength = 4500;
 		}
 
+		public Commands Commands = new Commands();
+		public class Commands{
+			public ArrayList<String> groupListCommands = new ArrayList<String>(){
+				{
+					this.add("gl");
+					this.add("GL");
+					this.add("grouplist");
+					this.add("GroupList");
+					this.add("群列表");
+				}
+			};
+			public ArrayList<String> superCommands = new ArrayList<String>(){
+				{
+					this.add("super");
+					this.add("权限");
+				}
+			};
+			public ArrayList<String> sendtoOtherGroupCommands = new ArrayList<String>(){
+				{
+					this.add("stg");
+					this.add("STG");
+					this.add("sendtogroup");
+					this.add("SendToGroup");
+				}
+			};
+		}
 	}
 
 	public RandomImages RandomImages = new RandomImages();

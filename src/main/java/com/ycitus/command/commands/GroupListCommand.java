@@ -21,9 +21,6 @@ public class GroupListCommand extends RobotCommand {
         getRange().add(RobotCommandChatType.FRIEND_CHAT);
         getRange().add(RobotCommandChatType.GROUP_CHAT);
 
-        getUser().add(RobotCommandUser.NORMAL_USER);
-        getUser().add(RobotCommandUser.GROUP_ADMINISTRATOR);
-        getUser().add(RobotCommandUser.GROUP_OWNER);
         getUser().add(RobotCommandUser.BOT_ADMINISTRATOR);
     }
 

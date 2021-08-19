@@ -17,11 +17,12 @@ public class RobotCommandManager {
 		// Add Commands.
 		commands.add(new ReloadCommand("#重载配置.*"));
 		commands.add(new RebotCommand("seturebot"));
-		commands.add(new SendtoOtherGroupCommand(
-				"^(?:(?:stg)|(?:STG)|(?:sendtogroup)|(?:SendtoGroup))\\s?([\\s\\S]*)$"));
-		commands.add(new GroupListCommand(
-				"^(?:(?:gl)|(?:GL)|(?:grouplist)|(?:GroupList)|(?:群列表))\\s?([\\s\\S]*)$"));
-		commands.add(new SuperCommand("^(?:(?:super)|(?:权限))\\s?([\\s\\S]*)$"));
+		commands.add(new SendtoOtherGroupCommand(setCommand(FileManager.applicationConfig_File
+				.getSpecificDataInstance().Systems.Commands.groupListCommands)));
+		commands.add(new GroupListCommand(setCommand(FileManager.applicationConfig_File
+				.getSpecificDataInstance().Systems.Commands.groupListCommands)));
+		commands.add(new SuperCommand(setCommand(FileManager.applicationConfig_File
+				.getSpecificDataInstance().Systems.Commands.superCommands)));
 		commands.add(new RandomImagesCommand(setCommand(FileManager.applicationConfig_File
 				.getSpecificDataInstance().RandomImages.setuCommands)));
 	}
@@ -73,11 +74,11 @@ public class RobotCommandManager {
 
 	}
 
-	public String setCommand(ArrayList<String> setuCommands){
+	public String setCommand(ArrayList<String> Commands){
 		String command = "^(?:";
-		if (setuCommands.isEmpty()) return "来张图";
-		for (String setuCommand : setuCommands){
-			command = command + "(?:" + setuCommand + ")|";
+		if (Commands.isEmpty()) return "test";
+		for (String Command : Commands){
+			command = command + "(?:" + Command + ")|";
 		}
 		command = command.substring(0, command.length() - 1);
 		command = command + ")\\s?([\\s\\S]*)$";
