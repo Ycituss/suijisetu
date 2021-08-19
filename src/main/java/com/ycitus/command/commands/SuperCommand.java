@@ -46,6 +46,12 @@ public class SuperCommand extends RobotCommand {
                 this.add("权限");
             }
         };
+        String help = "\n使用\"super list\"查看拥有super权限的成员\n\n"
+                + "使用以下格式添加或删除成员权限：\n"
+                + "\"super add\\\\del QQ号码\"\n"
+                + "示例：\n"
+                + "\"super add 2799282971\"\n\n"
+                + "更多帮助请查看http://www.ycitus.cn/other/index.html";
 
         if (strings.length >= 2 && strings[1].equals("list")){
             ArrayList<Long> qqs = FileManager.applicationConfig_File
@@ -93,19 +99,22 @@ public class SuperCommand extends RobotCommand {
                     MessageManager.sendMessageBySituation(fromGroup, fromQQ
                             , "输入的qq号不在super权限列表中");
                 }
+            }else {
+                MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
             }
             return;
         }
 
         if (strings.length >= 3 && strings[1].equals("set")){
             if (strings.length >= 4 && strings[2].equals("imageQuality")){
-                int imageQuality = 2;
+                int imageQuality;
+                String Quality = new String();
                 switch (strings[3]){
-                    case "0": imageQuality = 0;break;
-                    case "1": imageQuality = 1;break;
-                    case "2": imageQuality = 2;break;
-                    case "3": imageQuality = 3;break;
-                    case "4": imageQuality = 4;break;
+                    case "0": imageQuality = 0; Quality = "mini";break;
+                    case "1": imageQuality = 1; Quality = "thumb";break;
+                    case "2": imageQuality = 2; Quality = "small";break;
+                    case "3": imageQuality = 3; Quality = "regular";break;
+                    case "4": imageQuality = 4; Quality = "original";break;
                     default: imageQuality = -1;
                 }
                 if (imageQuality == -1){
@@ -114,7 +123,12 @@ public class SuperCommand extends RobotCommand {
                 }else {
                     FileManager.applicationConfig_File.getSpecificDataInstance()
                             .RandomImages.defaultSetuQuality = imageQuality;
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "setu默认画质已成功设置为" + Quality);
                 }
+            }else {
+                MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
             }
             return;
         }
@@ -168,7 +182,7 @@ public class SuperCommand extends RobotCommand {
                 FileManager.applicationConfig_File.saveFile();
                 FileManager.applicationConfig_File.reloadFile();
                 MessageManager.sendMessageBySituation(fromGroup, fromQQ, "随机图片发送已全局打开!");
-            }else {
+            }else if (strings.length == 2){
                 if (!FileManager.applicationConfig_File.getSpecificDataInstance()
                         .RandomImages.enableGroup.contains(fromGroup)){
                     FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableGroup.add(fromGroup);
@@ -178,6 +192,8 @@ public class SuperCommand extends RobotCommand {
                 }else {
                     MessageManager.sendMessageBySituation(fromGroup, fromQQ, "本群随机图片发送已打开,请勿重复操作!");
                 }
+            }else {
+                MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
             }
             return;
         }
@@ -241,20 +257,25 @@ public class SuperCommand extends RobotCommand {
                 FileManager.applicationConfig_File.saveFile();
                 FileManager.applicationConfig_File.reloadFile();
                 MessageManager.sendMessageBySituation(fromGroup, fromQQ, "随机图片发送已全局关闭!");
-            }else{
-                if (FileManager.applicationConfig_File.getSpecificDataInstance()
-                        .RandomImages.enableGroup.contains(fromGroup)){
-                    FileManager.applicationConfig_File.getSpecificDataInstance()
-                            .RandomImages.enableGroup.remove(fromGroup);
+            }else if (strings.length == 2){
+                if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableAll
+                        ||FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.enableGroup.contains(fromGroup)){
+                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableAll = false;
                     if (FileManager.applicationConfig_File.getSpecificDataInstance()
-                            .RandomImages.groupSetu.contains(fromGroup)){
+                            .RandomImages.enableGroup.contains(fromGroup)) {
                         FileManager.applicationConfig_File.getSpecificDataInstance()
-                                .RandomImages.groupSetu.remove(fromGroup);
-                    }
-                    if (FileManager.applicationConfig_File.getSpecificDataInstance()
-                            .RandomImages.groupR18.contains(fromGroup)){
-                        FileManager.applicationConfig_File.getSpecificDataInstance()
-                                .RandomImages.groupR18.remove(fromGroup);
+                                .RandomImages.enableGroup.remove(fromGroup);
+                        if (FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupSetu.contains(fromGroup)) {
+                            FileManager.applicationConfig_File.getSpecificDataInstance()
+                                    .RandomImages.groupSetu.remove(fromGroup);
+                        }
+                        if (FileManager.applicationConfig_File.getSpecificDataInstance()
+                                .RandomImages.groupR18.contains(fromGroup)) {
+                            FileManager.applicationConfig_File.getSpecificDataInstance()
+                                    .RandomImages.groupR18.remove(fromGroup);
+                        }
                     }
                     FileManager.applicationConfig_File.saveFile();
                     FileManager.applicationConfig_File.reloadFile();
@@ -262,6 +283,8 @@ public class SuperCommand extends RobotCommand {
                 }else {
                     MessageManager.sendMessageBySituation(fromGroup, fromQQ, "本群随机图片发送已关闭,请问重复操作!");
                 }
+            }else {
+                MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
             }
             return;
         }
@@ -307,16 +330,12 @@ public class SuperCommand extends RobotCommand {
                 }else {
                     MessageManager.sendMessageBySituation(fromGroup, fromQQ, "要删除的指令头不存在!");
                 }
+            }else {
+                MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
             }
             return;
         }
 
-        String help = "\n使用\"super list\"查看拥有super权限的成员\n\n"
-                + "使用以下格式添加或删除成员权限：\n"
-                + "\"super add\\\\del QQ号码\"\n"
-                + "示例：\n"
-                + "\"super add 2799282971\"\n\n"
-                + "更多帮助请查看http://www.ycitus.cn/other/index.html";
         MessageManager.sendMessageBySituation(fromGroup, fromQQ, help);
     }
 
