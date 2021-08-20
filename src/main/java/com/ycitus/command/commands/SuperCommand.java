@@ -113,6 +113,7 @@ public class SuperCommand extends RobotCommand {
                             .RandomImages.recallDelay = Integer.parseInt(strings[3]);
                     FileManager.applicationConfig_File.saveFile();
                     FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "设置成功");
                 }else {
                     MessageManager.sendMessageBySituation(fromGroup, fromQQ, "输入的数值不合法");
                 }
