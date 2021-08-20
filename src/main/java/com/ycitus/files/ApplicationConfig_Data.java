@@ -91,6 +91,8 @@ public class ApplicationConfig_Data {
 
 	public RandomImages RandomImages = new RandomImages();
 	public class RandomImages {
+		public boolean recallEnable = false;
+		public int recallDelay = 5000;
 		public boolean enableAll = true;
 		public boolean setuAll = false;
 		public boolean r18All = false;

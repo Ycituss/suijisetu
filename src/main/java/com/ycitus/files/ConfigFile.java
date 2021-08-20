@@ -297,6 +297,10 @@ public class ConfigFile {
                 .RandomImages.defaultSetuQuality;
         ArrayList<Long> enableGroup = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.enableGroup;
+        Boolean setuRecallEnable = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.recallEnable;
+        int setuRecallDelay = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.recallDelay;
 
         this.deleteFile();
         ApplicationConfig_File tempFile = new ApplicationConfig_File(ConfigFile.getApplicationConfigPath(),

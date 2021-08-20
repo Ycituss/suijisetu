@@ -106,7 +106,17 @@ public class SuperCommand extends RobotCommand {
         }
 
         if (strings.length >= 3 && strings[1].equals("set")){
-            if (strings.length >= 4 && strings[2].equals("imageQuality")){
+            if (strings.length >= 4 && strings[2].equals("recallDelay")
+                    && Pattern.matches("\\d+", strings[3])){
+                if (Integer.parseInt(strings[3]) <= 150000 && Integer.parseInt(strings[3]) > 0){
+                    FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.recallDelay = Integer.parseInt(strings[3]);
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                }else {
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "输入的数值不合法");
+                }
+            }else if (strings.length >= 4 && strings[2].equals("imageQuality")){
                 int imageQuality;
                 String Quality = new String();
                 switch (strings[3]){
@@ -134,7 +144,16 @@ public class SuperCommand extends RobotCommand {
         }
 
         if (strings.length >= 2 && strings[1].equals("open")){
-            if (strings.length >= 3 && strings[2].equals("setu")){
+            if (strings.length >= 3 && strings[2].equals("recall")){
+                if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable){
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "setu自动撤回已打开，请勿重复操作");
+                }else {
+                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable = true;
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "setu自动撤回打开成功");
+                }
+            }else if (strings.length >= 3 && strings[2].equals("setu")){
                 if (strings.length >= 4 && strings[3].equals("all")){
                     FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll = true;
                     FileManager.applicationConfig_File.saveFile();
@@ -199,7 +218,16 @@ public class SuperCommand extends RobotCommand {
         }
 
         if (strings.length >= 2 && strings[1].equals("close")){
-            if (strings.length >= 3 && strings[2].equals("setu")){
+            if (strings.length >= 3 && strings[2].equals("recall")){
+                if (!FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable){
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "setu自动撤回已关闭，请勿重复操作");
+                }else {
+                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable = false;
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "setu自动撤回关闭成功");
+                }
+            }else if (strings.length >= 3 && strings[2].equals("setu")){
                 FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll = false;
                 FileManager.applicationConfig_File.saveFile();
                 FileManager.applicationConfig_File.reloadFile();

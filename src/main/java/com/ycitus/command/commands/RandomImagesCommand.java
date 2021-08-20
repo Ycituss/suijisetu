@@ -215,7 +215,8 @@ public class RandomImagesCommand extends RobotCommand {
                 Image uploadImage = ExternalResource.uploadAsImage(is,
                         PluginMain.getCurrentBot().getGroups().stream().findAny().get());
                 String sendMessage =  "[mirai:image:" + uploadImage.getImageId() + "]";
-                MessageManager.sendMessageToQQGroup(fromGroup, sendMessage);
+                int recallDelay = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallDelay;
+                MessageManager.sendMessageToQQGroup(fromGroup, sendMessage, recallDelay);
             } catch (Exception e) {
                 MessageManager.sendMessageToQQGroup(fromGroup, "图片发送错误");
             }

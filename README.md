@@ -25,6 +25,8 @@
 > 查看当前拥有权限的成员|super list|
 > 给成员添加权限|super add QQ号|
 > 删除成员权限|super del QQ号|
+> 打开/关闭色图自动撤回|super open/close recall|此功能默认关闭
+> 设置撤回延时|super set recallDelay 5000|延时单位为ms，默认设置为5000ms，可设置最大值为150000ms(2分半) 
 > 设置默认色图画质|super set imageQuality 2|可选参数有0,1,2,3,4;初始设置为2
 > 打开本群随机图片发送|super open (all)|(all)为可选参数，表示全局开启或关闭，使用时请不要带括号
 > 关闭本群随机图片发送|super close (all)

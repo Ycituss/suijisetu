@@ -3,7 +3,10 @@ package com.ycitus.framework;
 import com.ycitus.PluginMain;
 import com.ycitus.debug.LoggerManager;
 import com.ycitus.files.FileManager;
-import net.mamoe.mirai.contact.*;
+import net.mamoe.mirai.contact.Friend;
+import net.mamoe.mirai.contact.Member;
+import net.mamoe.mirai.contact.Stranger;
+import net.mamoe.mirai.message.MessageReceipt;
 import net.mamoe.mirai.message.code.MiraiCode;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChain;
@@ -142,7 +145,6 @@ public class MessageManager {
 
 	}
 
-
 	public static void sendMessageToQQGroup(long group, MessageChain messageChain) {
 		LoggerManager.logDebug("SendSystem", "给某个QQ群发送信息-QQ群的号码为：" + group);
 
@@ -161,6 +163,27 @@ public class MessageManager {
 		sendMessageToQQGroup(group, MiraiCode.deserializeMiraiCode(msg));
 	}
 
+	public static void sendMessageToQQGroup(long group, MessageChain messageChain, int recallDelay) {
+		LoggerManager.logDebug("SendSystem", "给某个QQ群发送信息-QQ群的号码为：" + group);
+
+
+		try {
+			MessageReceipt mp = PluginMain.getCurrentBot().getGroup(group).sendMessage(messageChain);
+			if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable){
+				mp.recallIn(recallDelay);
+			}
+		} catch (IllegalStateException e) {
+			LoggerManager.logDebug("SendSystem",
+					"IllegalStateException: Group = " + group);
+		}
+
+	}
+
+	public static void sendMessageToQQGroup(long group, String msg, int recallDelay) {
+		/** 对发送的文本进行字数检测 **/
+		msg = checkLengthAndModifySendMsg(msg);
+		sendMessageToQQGroup(group, MiraiCode.deserializeMiraiCode(msg), recallDelay);
+	}
 
 
 }
