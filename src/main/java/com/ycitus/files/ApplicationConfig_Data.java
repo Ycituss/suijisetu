@@ -97,6 +97,7 @@ public class ApplicationConfig_Data {
 		public boolean setuAll = false;
 		public boolean r18All = false;
 		public int defaultSetuQuality = 2;
+		public int defaultImage = 2;
 		public ArrayList<String> setuCommands = new ArrayList<String>(){
 			{
 				this.add("gkd");

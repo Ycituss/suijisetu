@@ -58,7 +58,14 @@ public class RandomImagesCommand extends RobotCommand {
         }else if (strings.length >= 2 && (strings[1].equals("lol") || strings[1].equals("英雄联盟"))){
             sendImage(fromGroup, "png", "lol", "https://api.vvhan.com/api/lolskin");
         }else if (strings.length == 1){
-            sendImage(fromGroup, "png", "三次元", "https://api.vvhan.com/api/girl");
+            switch (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.defaultImage){
+                case 0:lolicon(fromGroup, fromQQ, "gkd setu".split(" "));break;
+                case 1:sendImage(fromGroup, "jpg", "风景", "https://api.vvhan.com/api/view");break;
+                case 3:sendImage(fromGroup, "png", "三次元", "https://api.vvhan.com/api/mobil.girl");break;
+                case 4:sendImage(fromGroup, "png", "lol", "https://api.vvhan.com/api/lolskin");break;
+                case 2:
+                default:sendImage(fromGroup, "png", "三次元", "https://api.vvhan.com/api/girl");
+            }
         }else {
             MessageManager.sendMessageBySituation(fromGroup, fromQQ, "输入的指令有误!");
         }

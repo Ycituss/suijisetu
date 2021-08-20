@@ -116,6 +116,27 @@ public class SuperCommand extends RobotCommand {
                 }else {
                     MessageManager.sendMessageBySituation(fromGroup, fromQQ, "输入的数值不合法");
                 }
+            }else if (strings.length >= 4 && strings[2].equals("defaultImage")){
+                int defaultImage;
+                String image = new String();
+                switch (strings[3]){
+                    case "0": defaultImage = 0; image = "setu";break;
+                    case "1": defaultImage = 1; image = "风景图";break;
+                    case "2": defaultImage = 2; image = "电脑分辨率美图";break;
+                    case "3": defaultImage = 3; image = "手机分辨率美图";break;
+                    case "4": defaultImage = 4; image = "英雄联盟图片";break;
+                    default: defaultImage = -1;
+                }
+                if (defaultImage == -1){
+                    String helpString = "输入的参数不正确\n支持的参数:\"0,1,2,3,4\"";
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, helpString);
+                }else {
+                    FileManager.applicationConfig_File.getSpecificDataInstance()
+                            .RandomImages.defaultImage = defaultImage;
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "默认图片类型已成功设置为" + image);
+                }
             }else if (strings.length >= 4 && strings[2].equals("imageQuality")){
                 int imageQuality;
                 String Quality = new String();

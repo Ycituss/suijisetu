@@ -301,6 +301,8 @@ public class ConfigFile {
                 .RandomImages.recallEnable;
         int setuRecallDelay = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.recallDelay;
+        int defaultImage = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.defaultImage;
 
         this.deleteFile();
         ApplicationConfig_File tempFile = new ApplicationConfig_File(ConfigFile.getApplicationConfigPath(),
@@ -341,6 +343,9 @@ public class ConfigFile {
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableAll = enableAll;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.defaultSetuQuality = defaultSetuQuality;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableGroup = enableGroup;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable = setuRecallEnable;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallDelay = setuRecallDelay;
+
 
         saveFile();
         reloadFile();

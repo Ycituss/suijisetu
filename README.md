@@ -28,12 +28,24 @@
 > 打开/关闭色图自动撤回|super open/close recall|此功能默认关闭
 > 设置撤回延时|super set recallDelay 5000|延时单位为ms，默认设置为5000ms，可设置最大值为150000ms(2分半) 
 > 设置默认色图画质|super set imageQuality 2|可选参数有0,1,2,3,4;初始设置为2
+> 设置默认发送图片类型(即直接输入gkd得到的图片类型)|super set defaultImage 2|可选参数有0,1,2,3,4,对应图片类型参见<a href="#图片类型">下表</a>
 > 打开本群随机图片发送|super open (all)|(all)为可选参数，表示全局开启或关闭，使用时请不要带括号
 > 关闭本群随机图片发送|super close (all)
 > 打开本群随机色图|super open setu (all)
 > 关闭本群随机色图|super close setu (all)
 > 打开本群随机色图r18功能|super open r18 (all)|
 > 关闭本群随机色图r18功能|super close r18 (all)
+> 
+> 
+> <h4 id="图片类型">图片类型</h4>
+>
+> 参数|图片类型
+> ---|---
+> 0|setu
+> 1|风景图
+> 2|电脑分辨率美图
+> 3|手机分辨率美图
+> 4|英雄联盟图片
 
 - ### **随机图片指令**
 ><font color=Darkorange>*指令头*</font>|<font color=Darkorange>*gkd/来张图*</font>
