@@ -8,10 +8,7 @@ import net.mamoe.mirai.contact.Member;
 import net.mamoe.mirai.contact.Stranger;
 import net.mamoe.mirai.message.MessageReceipt;
 import net.mamoe.mirai.message.code.MiraiCode;
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.MessageChain;
-import net.mamoe.mirai.message.data.MessageUtils;
-import net.mamoe.mirai.message.data.PlainText;
+import net.mamoe.mirai.message.data.*;
 
 //用于管理Message的类
 public class MessageManager {
@@ -145,11 +142,11 @@ public class MessageManager {
 
 	}
 
-	public static void sendMessageToQQGroup(long group, MessageChain messageChain) {
+	public static void sendMessageToQQGroup(long group, Message message) {
 		LoggerManager.logDebug("SendSystem", "给某个QQ群发送信息-QQ群的号码为：" + group);
 
 		try {
-			PluginMain.getCurrentBot().getGroup(group).sendMessage(messageChain);
+			PluginMain.getCurrentBot().getGroup(group).sendMessage(message);
 		} catch (IllegalStateException e) {
 			LoggerManager.logDebug("SendSystem",
 					"IllegalStateException: Group = " + group);
@@ -163,12 +160,12 @@ public class MessageManager {
 		sendMessageToQQGroup(group, MiraiCode.deserializeMiraiCode(msg));
 	}
 
-	public static void sendMessageToQQGroup(long group, MessageChain messageChain, int recallDelay) {
+	public static void sendMessageToQQGroup(long group, Message message, int recallDelay) {
 		LoggerManager.logDebug("SendSystem", "给某个QQ群发送信息-QQ群的号码为：" + group);
 
 
 		try {
-			MessageReceipt mp = PluginMain.getCurrentBot().getGroup(group).sendMessage(messageChain);
+			MessageReceipt mp = PluginMain.getCurrentBot().getGroup(group).sendMessage(message);
 			if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable){
 				mp.recallIn(recallDelay);
 			}
@@ -184,6 +181,25 @@ public class MessageManager {
 		msg = checkLengthAndModifySendMsg(msg);
 		sendMessageToQQGroup(group, MiraiCode.deserializeMiraiCode(msg), recallDelay);
 	}
+
+	public static void sendMessageToQQGroup(long group, String msg, int recallDelay, boolean relay) {
+		/** 对发送的文本进行字数检测 **/
+		msg = checkLengthAndModifySendMsg(msg);
+		ForwardMessageBuilder fmb = new ForwardMessageBuilder(PluginMain.getCurrentBot().getGroup(group));
+		fmb.add(PluginMain.getCurrentBot(), MiraiCode.deserializeMiraiCode(msg));
+		if (relay) sendMessageToQQGroup(group, fmb.build(), recallDelay);
+		else sendMessageToQQGroup(group, msg, recallDelay);
+	}
+
+	public static void sendMessageToQQGroup(long group, String msg, boolean relay) {
+		/** 对发送的文本进行字数检测 **/
+		msg = checkLengthAndModifySendMsg(msg);
+		ForwardMessageBuilder fmb = new ForwardMessageBuilder(PluginMain.getCurrentBot().getGroup(group));
+		fmb.add(PluginMain.getCurrentBot(), MiraiCode.deserializeMiraiCode(msg));
+		if (relay) sendMessageToQQGroup(group, fmb.build());
+		else sendMessageToQQGroup(group, msg);
+	}
+
 
 
 }

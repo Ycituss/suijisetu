@@ -266,43 +266,51 @@ public class ConfigFile {
      */
     public void updateConfig() throws IllegalArgumentException, IllegalAccessException,
             IOException{
-        Boolean DebugEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Debug.enable;
-        Boolean autoAcceptAddQQFriend = FileManager.applicationConfig_File.getSpecificDataInstance()
+        boolean DebugEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Debug.enable;
+        boolean autoAcceptAddQQFriend = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .Admin.InvitationManager.QQFriendInvitation.autoAcceptAddQQFriend;
-        Boolean autoAcceptAddQQGroup = FileManager.applicationConfig_File.getSpecificDataInstance()
+        boolean autoAcceptAddQQGroup = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .Admin.InvitationManager.QQGroupInvitation.autoAcceptAddQQGroup;
         ArrayList<Long> botAdministrators = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .Admin.botAdministrators;
-        Boolean SendToFriendsEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+        boolean SendToFriendsEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
                 .SendSystem.SendDelay.SendToFriends.enable;
         long SendToFriendsDelay = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
                 .SendSystem.SendDelay.SendToFriends.delayTimeMS;
-        Boolean SendToGroupsEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+        boolean SendToGroupsEnable = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
                 .SendSystem.SendDelay.SendToGroups.enable;
         long SendToGroupsDelay = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
                 .SendSystem.SendDelay.SendToGroups.delayTimeMS;
         int sendMsgMaxLength = FileManager.applicationConfig_File.getSpecificDataInstance().Systems
                 .SendSystem.sendMsgMaxLength;
-        Boolean setu = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll;
-        Boolean r18 = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All;
+        ArrayList<String> groupListCommands = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Systems.Commands.groupListCommands;
+        ArrayList<String> superCommands = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Systems.Commands.superCommands;
+        ArrayList<String> sendtoOtherGroupCommands = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .Systems.Commands.sendtoOtherGroupCommands;
+        boolean setu = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll;
+        boolean r18 = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All;
         ArrayList<String> setuCommands = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.setuCommands;
         ArrayList<Long> groupSetu = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.groupSetu;
         ArrayList<Long> groupR18 = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.groupR18;
-        Boolean enableAll = FileManager.applicationConfig_File.getSpecificDataInstance()
+        boolean enableAll = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.enableAll;
         int defaultSetuQuality = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.defaultSetuQuality;
         ArrayList<Long> enableGroup = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.enableGroup;
-        Boolean setuRecallEnable = FileManager.applicationConfig_File.getSpecificDataInstance()
+        boolean setuRecallEnable = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.recallEnable;
         int setuRecallDelay = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.recallDelay;
         int defaultImage = FileManager.applicationConfig_File.getSpecificDataInstance()
                 .RandomImages.defaultImage;
+        boolean relayEnable = FileManager.applicationConfig_File.getSpecificDataInstance()
+                .RandomImages.relayEnable;
 
         this.deleteFile();
         ApplicationConfig_File tempFile = new ApplicationConfig_File(ConfigFile.getApplicationConfigPath(),
@@ -335,6 +343,12 @@ public class ConfigFile {
                 .SendSystem.SendDelay.SendToGroups.delayTimeMS = SendToGroupsDelay;
         FileManager.applicationConfig_File.getSpecificDataInstance().Systems
                 .SendSystem.sendMsgMaxLength = sendMsgMaxLength;
+        FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .Commands.groupListCommands = groupListCommands;
+        FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .Commands.superCommands = superCommands;
+        FileManager.applicationConfig_File.getSpecificDataInstance().Systems
+                .Commands.sendtoOtherGroupCommands = sendtoOtherGroupCommands;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll = setu;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All = r18;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuCommands = setuCommands;
@@ -345,6 +359,7 @@ public class ConfigFile {
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.enableGroup = enableGroup;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable = setuRecallEnable;
         FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallDelay = setuRecallDelay;
+        FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.defaultImage = defaultImage;
 
 
         saveFile();

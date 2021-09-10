@@ -103,12 +103,13 @@ public class RandomImagesCommand extends RobotCommand {
     风景图,真人,lol图片(韩小韩api https://api.vvhan.com/)
      */
     private static void sendImage(long fromGroup, String ext, String name, String url){
+        boolean relayEnable = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.relayEnable;
         String uid = Long.toString(System.currentTimeMillis()) + name;
         try {
             FileInputStream is = new FileInputStream(httpRequest(url, uid, ext, name));
             Image uploadImage = ExternalResource.uploadAsImage(is,
                     PluginMain.getCurrentBot().getGroups().stream().findAny().get());
-            MessageManager.sendMessageToQQGroup(fromGroup, "[mirai:image:" + uploadImage.getImageId() + "]");
+            MessageManager.sendMessageToQQGroup(fromGroup, "[mirai:image:" + uploadImage.getImageId() + "]", relayEnable);
         }catch (Exception e){
             e.printStackTrace();
             MessageManager.sendMessageToQQGroup(fromGroup, "获取图片失败");
@@ -212,6 +213,7 @@ public class RandomImagesCommand extends RobotCommand {
     lolicon专用图片发送
      */
     private static void loliconSend(String str, long fromGroup){
+        boolean relayEnable = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.relayEnable;
         Map<String, String> data = StrToMap(str);
         if (!data.get("error").trim().isEmpty()){
             MessageManager.sendMessageToQQGroup(fromGroup, data.get("error"));
@@ -223,7 +225,7 @@ public class RandomImagesCommand extends RobotCommand {
                         PluginMain.getCurrentBot().getGroups().stream().findAny().get());
                 String sendMessage =  "[mirai:image:" + uploadImage.getImageId() + "]";
                 int recallDelay = FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallDelay;
-                MessageManager.sendMessageToQQGroup(fromGroup, sendMessage, recallDelay);
+                MessageManager.sendMessageToQQGroup(fromGroup, sendMessage, recallDelay, relayEnable);
             } catch (Exception e) {
                 MessageManager.sendMessageToQQGroup(fromGroup, "图片发送错误");
             }

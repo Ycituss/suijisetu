@@ -34,7 +34,9 @@
 > 打开本群随机色图|super open setu (all)
 > 关闭本群随机色图|super close setu (all)
 > 打开本群随机色图r18功能|super open r18 (all)|
-> 关闭本群随机色图r18功能|super close r18 (all)
+> 关闭本群随机色图r18功能|super close r18 (all)|
+> 开启图片转发功能|super open relay|
+> 关闭图片转发功能|super close relay|
 > 
 > 
 > <h4 id="图片类型">图片类型</h4>

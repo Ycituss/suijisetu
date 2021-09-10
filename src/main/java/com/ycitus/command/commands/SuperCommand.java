@@ -166,7 +166,16 @@ public class SuperCommand extends RobotCommand {
         }
 
         if (strings.length >= 2 && strings[1].equals("open")){
-            if (strings.length >= 3 && strings[2].equals("recall")){
+            if (strings.length >= 3 && strings[2].equals("relay")){
+                if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.relayEnable){
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "图片转发模式已打开，请勿重复操作");
+                }else {
+                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.relayEnable = true;
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "图片转发模式打开成功");
+                }
+            }else if (strings.length >= 3 && strings[2].equals("recall")){
                 if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable){
                     MessageManager.sendMessageBySituation(fromGroup, fromQQ, "setu自动撤回已打开，请勿重复操作");
                 }else {
@@ -240,7 +249,16 @@ public class SuperCommand extends RobotCommand {
         }
 
         if (strings.length >= 2 && strings[1].equals("close")){
-            if (strings.length >= 3 && strings[2].equals("recall")){
+            if (strings.length >= 3 && strings[2].equals("relay")){
+                if (!FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.relayEnable){
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "图片转发模式已关闭，请勿重复操作");
+                }else {
+                    FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.relayEnable = false;
+                    FileManager.applicationConfig_File.saveFile();
+                    FileManager.applicationConfig_File.reloadFile();
+                    MessageManager.sendMessageBySituation(fromGroup, fromQQ, "图片转发模式关闭成功");
+                }
+            }else if (strings.length >= 3 && strings[2].equals("recall")){
                 if (!FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.recallEnable){
                     MessageManager.sendMessageBySituation(fromGroup, fromQQ, "setu自动撤回已关闭，请勿重复操作");
                 }else {
