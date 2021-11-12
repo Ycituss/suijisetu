@@ -219,7 +219,7 @@ public class RandomImagesCommand extends RobotCommand {
             MessageManager.sendMessageToQQGroup(fromGroup, data.get("error"));
         }else {
             try {
-                FileInputStream is = new FileInputStream(httpRequest(data.get("urls"),
+                FileInputStream is = new FileInputStream(httpRequest(data.get("urls").replace("i.pixiv.cat", "i.pixiv.re"),
                         data.get("uid"), data.get("ext"), "setu"));
                 Image uploadImage = ExternalResource.uploadAsImage(is,
                         PluginMain.getCurrentBot().getGroups().stream().findAny().get());
