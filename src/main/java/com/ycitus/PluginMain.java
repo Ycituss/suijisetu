@@ -17,7 +17,7 @@ public final class PluginMain extends JavaPlugin {
     private static boolean pluginLoaded = false;
     public static RobotCommandManager commandManager = null;
     private static Bot CURRENT_BOT = null;
-    private static String version = "3.6.2";
+    private static String version = "3.6.3";
 
     public static String getVersion() { return version; }
 
@@ -36,7 +36,7 @@ public final class PluginMain extends JavaPlugin {
     }
 
     private PluginMain() {
-        super(new JvmPluginDescriptionBuilder("com.ycitus.setu", "3.6.2")
+        super(new JvmPluginDescriptionBuilder("com.ycitus.setu", "3.6.3")
                 .name("Setu")
                 .author("ycitus")
                 .build());

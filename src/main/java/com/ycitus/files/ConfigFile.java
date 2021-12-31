@@ -19,7 +19,7 @@ public class ConfigFile {
         String result = null;
 
         result = FileUtil.getJavaRunPath();
-        result = result + "config" + File.separator + "Setu" + File.separator;
+        result = result + "config" + File.separator + "com.ycitus.setu" + File.separator;
 
         return result;
     }
