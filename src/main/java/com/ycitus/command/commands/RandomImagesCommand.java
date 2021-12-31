@@ -50,16 +50,18 @@ public class RandomImagesCommand extends RobotCommand {
         String[] strings = cutMsg(msg).split(" ");
 
         if (strings.length >= 2 && (strings[1].equals("setu") || strings[1].equals("色图"))){
-            lolicon(fromGroup, fromQQ, strings);
+            lolicon(fromGroup, fromQQ, strings, false);
         }else if (strings.length >= 2 && (strings[1].equals("风景") || strings[1].equals("风景图"))){
             sendImage(fromGroup, "jpg", "风景", "https://api.vvhan.com/api/view");
         }else if (strings.length >= 2 && (strings[1].equals("真人") || strings[1].equals("三次元"))){
             sendImage(fromGroup, "png", "三次元", "https://api.vvhan.com/api/mobil.girl");
         }else if (strings.length >= 2 && (strings[1].equals("lol") || strings[1].equals("英雄联盟"))){
             sendImage(fromGroup, "png", "lol", "https://api.vvhan.com/api/lolskin");
+        }else if (strings.length >= 2){
+            lolicon(fromGroup, fromQQ, strings, true);
         }else if (strings.length == 1){
             switch (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.defaultImage){
-                case 0:lolicon(fromGroup, fromQQ, "gkd setu".split(" "));break;
+                case 0:lolicon(fromGroup, fromQQ, "gkd setu".split(" "), false);break;
                 case 1:sendImage(fromGroup, "jpg", "风景", "https://api.vvhan.com/api/view");break;
                 case 3:sendImage(fromGroup, "png", "三次元", "https://api.vvhan.com/api/mobil.girl");break;
                 case 4:sendImage(fromGroup, "png", "lol", "https://api.vvhan.com/api/lolskin");break;
@@ -119,13 +121,24 @@ public class RandomImagesCommand extends RobotCommand {
     /*
     lolicon二次元色图
      */
-    private static void lolicon(long fromGroup, long fromQQ, String[] strings){
+    private static void lolicon(long fromGroup, long fromQQ, String[] strings, boolean tag){
         HttpGet httpGet = new HttpGet();
         String loliconUrl = "https://api.lolicon.app/setu/v2?";
         if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.setuAll
                 || FileManager.applicationConfig_File.getSpecificDataInstance()
                     .RandomImages.groupSetu.contains(fromGroup)){
-            String str = new String();
+            String str = "";
+            if (tag) {
+                String tempUrl = loliconUrl;
+                String[] tags = strings[1].split("#");
+                for (int i = 0; i < tags.length; i++) {
+                    tempUrl = tempUrl + "&tag=" + tags[i];
+                }
+                str = httpGet.doGet(tempUrl);
+//                MessageManager.sendMessageToQQGroup(fromGroup, tempUrl);
+                loliconSend(str, fromGroup);
+                return;
+            }
             if (strings.length == 4){
                 if (strings[2].equals("r18") || strings[2].equals("R18")){
                     if (FileManager.applicationConfig_File.getSpecificDataInstance().RandomImages.r18All

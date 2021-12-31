@@ -1,12 +1,12 @@
 package com.ycitus.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HttpGet {
     public String doGet(String URL) {
@@ -16,7 +16,7 @@ public class HttpGet {
         StringBuilder result = new StringBuilder();
         try {
             //创建远程url连接对象
-            java.net.URL url = new URL(URL);
+            java.net.URL url = new URL(encode(URL, "UTF-8"));
             //通过远程url连接对象打开一个连接，强转成HTTPURLConnection类
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -58,6 +58,19 @@ public class HttpGet {
             conn.disconnect();
         }
         return result.toString();
+    }
+
+
+    private static String zhPattern = "[\\u4e00-\\u9fa5]";
+    public static String encode(String str, String charset) throws UnsupportedEncodingException {
+        Pattern p = Pattern.compile(zhPattern);
+        Matcher m = p.matcher(str);
+        StringBuffer b = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(b, URLEncoder.encode(m.group(0), charset));
+        }
+        m.appendTail(b);
+        return b.toString();
     }
 }
 
