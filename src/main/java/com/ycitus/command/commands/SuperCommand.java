@@ -22,6 +22,7 @@ public class SuperCommand extends RobotCommand {
         getRange().add(RobotCommandChatType.STRANGER_CHAT);
 
         getUser().add(RobotCommandUser.BOT_ADMINISTRATOR);
+        getUser().add(RobotCommandUser.GROUP_OWNER);
     }
 
     @Override

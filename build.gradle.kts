@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.ycitus"
-version = "3.6.3"
+version = "3.6.4"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
@@ -16,5 +16,5 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation("com.google.code.gson:gson:2.8.7")
+    implementation("com.google.code.gson:gson:2.9.0")
 }

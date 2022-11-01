@@ -2,7 +2,6 @@ package com.ycitus.files;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ycitus.PluginMain;
 import com.ycitus.debug.LoggerManager;
 import com.ycitus.utils.FileUtil;
 
@@ -19,7 +18,7 @@ public class ConfigFile {
         String result = null;
 
         result = FileUtil.getJavaRunPath();
-        result = result + "config" + File.separator + "com.ycitus.setu" + File.separator;
+        result = result + "config" + File.separator + "Setu" + File.separator;
 
         return result;
     }
@@ -151,14 +150,14 @@ public class ConfigFile {
         loadFile();
 
         //版本更新
-        String version = PluginMain.getVersion();
-        if (!FileManager.applicationConfig_File.getSpecificDataInstance().version.equals(version)){
-            updateConfig();
-            FileManager.applicationConfig_File.getSpecificDataInstance().version = version;
-            saveFile();
-            reloadFile();
-            LoggerManager.logDebug("FileSystem", "Setu版本更新成功!");
-        }
+//        String version = PluginMain.getVersion();
+//        if (!FileManager.applicationConfig_File.getSpecificDataInstance().version.equals(version)){
+//            updateConfig();
+//            FileManager.applicationConfig_File.getSpecificDataInstance().version = version;
+//            saveFile();
+//            reloadFile();
+//            LoggerManager.logDebug("FileSystem", "Setu版本更新成功!");
+//        }
 
 
         // Set Flag.
